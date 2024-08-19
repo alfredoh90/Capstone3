@@ -164,3 +164,5 @@ cython_debug/
 data/
 safety_gear_detect_V1.keras
 safety_gear_detect_V1.h5
+safety_gear_detect_V2.keras
+safety_gear_detect_V3.keras
