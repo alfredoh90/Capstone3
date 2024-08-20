@@ -162,6 +162,7 @@ cython_debug/
 #.idea/
 
 data/
+data2/
 safety_gear_detect_V1.keras
 safety_gear_detect_V1.h5
 safety_gear_detect_V2.keras
