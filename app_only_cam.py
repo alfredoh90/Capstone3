@@ -20,7 +20,6 @@ st.title('🎈 Safety Gear Identifier ') #title of app
 st.info('This app uses a conv model to identify if the person on camera is or is not wearing safety gear') #adding info text to the app
 st.write('Hello world!')
 
-
 logtxtbox = st.empty() #empty textbox used to print class
 
 
@@ -41,11 +40,13 @@ def im_assesment(img):
     
     # Get the current timestamp
     timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    timestamp_log = datetime.now().strftime('%Y_%m_%d_%H_%M_%S')
+    
     
     logtxtbox.header(f"Predicted Class: {preds_label} | Timestamp: {timestamp}")
     
     # Store the current pred in session state
-    st.session_state.pred_image = f"{preds_label}_{timestamp}"
+    st.session_state.pred_image = f"{preds_label}_{timestamp_log}"
     
     if preds_class == 1:
         cl_pred_im.image('banners/warning.png')
@@ -70,6 +71,7 @@ def capture_button_callback():
     if 'frame' in st.session_state:
         st.session_state.captured_images.append(st.session_state.frame)
         st.session_state.captured_images_captions.append(st.session_state.pred_image)
+        
 
 # Define action to create a ZIP file from captured images
 def create_zip_from_images():
@@ -83,13 +85,13 @@ def create_zip_from_images():
             img_byte_arr = io.BytesIO()
             pil_image.save(img_byte_arr, format='PNG')
             img_byte_arr.seek(0)
-            
             # Add the image to the ZIP file with a caption as the file name
-            zip_file.writestr(f'{caption}.png', img_byte_arr.read())
+            zip_file.writestr(f'{caption}.png', img_byte_arr.getvalue())
     # Move to the beginning of the buffer
     buffer.seek(0)
-    
     return buffer.getvalue()
+
+zip_data = create_zip_from_images() # create empty zip_data
 
 cap = cv2.VideoCapture(1) # using CV2 to capture images using the webcam n in the system (on my laptop 0 is back 1 is front cam)
 
@@ -102,22 +104,22 @@ with col1:
 with col2:
     cl_pred_im = st.empty() #image to display if positive or negative
 
-
 capt_button = st.button("Capture") #add capture button
+
+# Display download button
+st.download_button(
+    label="Download All Images",
+    data=zip_data,
+    file_name="captured_images.zip"
+    #mime="application/zip"
+    )
+
     
 stop_button_pressed = st.button("Stop", type= 'primary') #add stop button
 
 cont_images_saved = st.container()
 
-# Display download button if there are captured images
-if st.session_state.captured_images:
-    zip_data = create_zip_from_images()
-    st.download_button(
-        label="Download All Images",
-        data=zip_data,
-        file_name="captured_images.zip",
-        mime="application/zip"
-    )
+
 
 #capture image, calculate prediction and display until Stop button is pressed
 while cap.isOpened() and not stop_button_pressed:
@@ -138,8 +140,10 @@ while cap.isOpened() and not stop_button_pressed:
     
     if capt_button:
         capture_button_callback() #add capture button
-        cont_images_saved.image(st.session_state.captured_images, caption = st.session_state.captured_images_captions, channels='RGB') #display images captured
         capt_button = False #reset the button
+        cont_images_saved.image(st.session_state.captured_images, caption = st.session_state.captured_images_captions, channels='RGB') #display images captured
+        zip_data = create_zip_from_images()
+
 
 st.text('Goodbye')   
 cap.release() #release cameras to be used 
