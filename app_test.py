@@ -23,7 +23,8 @@ st.write('Hello world!')
 logtxtbox = st.empty() #empty textbox used to print class
 
 
-model = tf.keras.models.load_model('Notebooks/safety_gear_detect_V4.keras') #load the model from memory
+with st.spinner('Model is being loaded..'):
+    model = tf.keras.models.load_model('Notebooks/safety_gear_detect_V4.keras') #load the model from memory
 
 
 
@@ -35,13 +36,14 @@ def im_assesment(img):
     preprocessed_image = np.array(preprocessed_image) / 255.0
 
     #predict the class using the image
+    
     predic = model(np.expand_dims(preprocessed_image, axis = 0))
+    
     
     #given the labels, predict the class as max value     
     labels = ['pos', 'neg']
     preds_class = np.argmax(predic)
     preds_label = labels[preds_class]
-    now = datetime
     
     # Get the current timestamp
     timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
@@ -67,26 +69,28 @@ with col2:
     cl_pred_im = st.empty() #image to display if positive or negative
 
 
-capture_button_pressed = st.button("Capture", key = 'c') #add stop button
-stop_button_pressed = st.button("Stop", key = 'q', type= 'primary') #add stop button
+#capture_button_pressed = st.button("Capture", key = 'c') #add stop button
+stop_button_pressed = st.button("Stop", type= 'primary') #add stop button
 
-
+j = 0
 #capture image, calculate prediction and display until Stop button is pressed
 while cap.isOpened() and not stop_button_pressed:
-    
-    ret, frame = cap.read() #get the frame from video capture device (actual image), ret --> true or False if the image was captured
-    
-    if not ret: #break the loop if capture fails
-        st.write("The Video capture has ended")
+    try:
+        ret, frame = cap.read() #get the frame from video capture device (actual image), ret --> true or False if the image was captured
+        
+        if not ret: #break the loop if capture fails
+            st.write("The Video capture has ended")
+            break
+        
+        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB) #transform from BGR to RGB
+        frame_placeholder.image(frame, channels = 'RGB') #display in the frame
+        
+        if j % 50 == 0: #Calculate prediction every 50 frames
+            im_assesment(frame) #predict image class
+        j+=1
+    except:
+        print('Exception generated')
         break
-    
-    frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB) #transform from BGR to RGB
-    frame_placeholder.image(frame, channels = 'RGB') #display in the frame
-    
-    im_assesment(frame) #predict image class
-    
-    if cv2.waitKey(1) & 0xFF == ord('q') or stop_button_pressed: # wait 1ms to see if we pressed 'q' to exit the while loop
-        break
-
+print('Close')
 cap.release() #release cameras to be used 
 cv2.destroyAllWindows() #close all 
