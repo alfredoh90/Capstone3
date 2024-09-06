@@ -9,6 +9,7 @@ import streamlit as st
 import numpy as np
 import cv2
 from datetime import datetime
+import pyautogui
 
 import tensorflow as tf # Importing TensorFlow
 
@@ -16,7 +17,10 @@ import tensorflow as tf # Importing TensorFlow
 st.title('SafeCheck AI') #title of app
 
 st.logo("banners/logo.png") #adding the logo to top corner
-st.image("banners/logo.png") #adding the logo to the starting image
+
+left_co, cent_co,last_co = st.columns(3) #center the logo
+with cent_co:
+      st.image("banners/logo.png", width = 200) #adding the logo to the starting image
 
 st.info('SafeCheck AI: Automating Safety, Protecting Lives.') #adding info text to the app
 
@@ -38,8 +42,11 @@ st.sidebar.markdown((
 
 logtxtbox = st.empty() #empty textbox used to print class
 
-with st.spinner('Model is being loaded..'):
-    model = tf.keras.models.load_model('Notebooks/safety_gear_detect_V4.keras') #load the model from memory
+if "model" not in st.session_state.keys():
+    with st.spinner('Model is being loaded..'):
+        st.session_state["model"] = tf.keras.models.load_model('Notebooks/safety_gear_detect_V4.keras') #load the model from memory
+        model = st.session_state["model"]
+    
 
 
 
@@ -84,8 +91,9 @@ with col2:
     cl_pred_im = st.empty() #image to display if positive or negative
 
 
-#capture_button_pressed = st.button("Capture", key = 'c') #add stop button
+
 stop_button_pressed = st.button("Stop", type= 'primary') #add stop button
+
 
 j = 0
 #capture image, calculate prediction and display until Stop button is pressed
@@ -109,3 +117,6 @@ while cap.isOpened() and not stop_button_pressed:
 print('Close')
 cap.release() #release cameras to be used 
 cv2.destroyAllWindows() #close all 
+ 
+if st.button("Reset", type = 'primary'): #create reset button by reloading the page
+    pyautogui.hotkey("ctrl","F5")

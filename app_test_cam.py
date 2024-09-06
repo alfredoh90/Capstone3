@@ -26,9 +26,11 @@ st.write('Hello world!')
 logtxtbox = st.empty() #empty textbox used to print class
 
 print('loading model')
-with st.spinner('Model is being loaded..'):
-    model = tf.keras.models.load_model('Notebooks/safety_gear_detect_V4.keras') #load the model from memory
-
+if "model" not in st.session_state.keys():
+    with st.spinner('Model is being loaded..'):
+        st.session_state["model"] = tf.keras.models.load_model('Notebooks/safety_gear_detect_V4.keras') #load the model from memory
+model = st.session_state["model"]
+    
 print('model loaded')
 
 
@@ -154,8 +156,9 @@ while cap.isOpened() and not stop_button_pressed:
         
         print(j)
         j+=1
-    except:
+    except Exception as e:
         print('Exception generated')
+        print(e)
         break
 print('Close')
 cap.release() #release cameras to be used 
