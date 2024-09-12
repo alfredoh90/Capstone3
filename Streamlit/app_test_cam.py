@@ -13,14 +13,37 @@ import io
 import zipfile
 from PIL import Image
 
+import pyautogui
+
 import tensorflow as tf # Importing TensorFlow
 
 
 st.title('🎈 Safety Gear Identifier ') #title of app
+st.logo("banners/logo.png") #adding the logo to top corner
 
 print('starting')
-st.info('This app uses a conv model to identify if the person on camera is or is not wearing safety gear') #adding info text to the app
-st.write('Hello world!')
+
+left_co, cent_co,last_co = st.columns(3) #center the logo
+with cent_co:
+      st.image("banners/logo.png", width = 200) #adding the logo to the starting image
+
+
+st.info('SafeCheck AI: Automating Safety, Protecting Lives.') #adding info text to the app
+
+# Sidebar
+st.sidebar.header(("The App"))
+st.sidebar.markdown((
+    "SafeCheck AI is a cutting-edge safety solution designed for warehouses and industrial sites, leveraging the power of advanced convolutional neural networks to ensure worker compliance with safety protocols. With real-time image recognition, SafeCheck AI detects if personnel are wearing essential protective gear—such as hard hats and vests—before they enter the operational area. The app helps prevent accidents, ensures compliance with safety regulations, and fosters a culture of responsibility in high-risk environments. SafeCheck AI is your go-to tool for automating safety checks and promoting a safer workplace."
+))
+
+st.sidebar.header(("About the team:"))
+st.sidebar.markdown((
+    "At SafeCheck AI, our team combines expertise in data science, supply chain operations, and technology to create innovative solutions for workplace safety. Led by :orange[Alfredo Hernandez], our Senior Data Specialist with a background in demand planning, supply chain management, and data analytics, we leverage cutting-edge machine learning models like convolutional neural networks to deliver accurate safety gear detection. Alfredo’s experience at companies like Shopify, SFN, and Flexport, along with his dual degrees in Industrial and Computer Science Engineering and a Master’s in Innovation, ensures our app is both effective and scalable for industrial environments."
+    """
+- [Linkedin](https://www.linkedin.com/in/a-hernandez-h/)
+- [Github](https://github.com/alfredoh90/Capstone3)
+"""
+))
 
 
 logtxtbox = st.empty() #empty textbox used to print class
@@ -163,3 +186,6 @@ while cap.isOpened() and not stop_button_pressed:
 print('Close')
 cap.release() #release cameras to be used 
 cv2.destroyAllWindows() #close all 
+
+if st.button("Reset", type = 'primary'): #create reset button by reloading the page
+    pyautogui.hotkey("ctrl","F5")
