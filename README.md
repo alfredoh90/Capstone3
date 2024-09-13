@@ -29,7 +29,7 @@ The images were preprocessed by resizing and rescaling, and data augmentation te
 ### Model Architecture
 The model used in Safecheck AI is a custom Convolutional Neural Network (CNN) with five convolutional layers. Below is a summary of the architecture:
 
-![model](banners/model.JPG)
+![model summary](banners/model.JPG)
 
 The model does not use any pre-trained architectures. Instead, it was built from scratch using five convolutional layers, batch normalization, and max pooling, followed by dense layers for classification.
 
@@ -42,6 +42,8 @@ Training duration: 70 epochs
 Performance metric: Accuracy
 Data augmentation techniques were applied to increase model robustness, and the ** final training accuracy was 93.79%, with a validation accuracy of over 90% **.
 
+![initial results](banners/pos1.JPG)
+
 ### Usage
 Safecheck AI runs as a web-based application using Streamlit. The app accesses the webcam to capture images every second, analyzes them in real-time, and provides continuous feedback on whether the person is wearing the appropriate safety gear.
 
@@ -53,6 +55,10 @@ The model achieved an overall accuracy of 93.79% on the training set and over 90
 
 ### Heatmaps and Visualizations
 The following image shows a side-by-side comparison of the original image, the heatmap showing areas of focus, and the model’s prediction:
+![heatmap1](banners/heatmap1.JPG)
+![heatmap2](banners/heatmap2.JPG)
+![heatmap3](banners/heatmap3.JPG)
+
 
 ### Deployment
 At this stage, Safecheck AI is a proof of concept and has not yet been deployed. Future plans include deploying the model in a live warehouse environment and implementing a re-training schedule to continuously improve the model’s accuracy based on locally acquired data.
