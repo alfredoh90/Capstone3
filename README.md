@@ -29,7 +29,7 @@ The images were preprocessed by resizing and rescaling, and data augmentation te
 ### Model Architecture
 The model used in Safecheck AI is a custom Convolutional Neural Network (CNN) with five convolutional layers. Below is a summary of the architecture:
 
-[model](banners/model.JPG)
+![model](banners/model.JPG)
 
 The model does not use any pre-trained architectures. Instead, it was built from scratch using five convolutional layers, batch normalization, and max pooling, followed by dense layers for classification.
 
