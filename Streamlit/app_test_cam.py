@@ -19,13 +19,13 @@ import tensorflow as tf # Importing TensorFlow
 
 
 st.title('🎈 Safety Gear Identifier ') #title of app
-st.logo("banners/logo.png") #adding the logo to top corner
+st.logo("../banners/logo.png") #adding the logo to top corner
 
 print('starting')
 
 left_co, cent_co,last_co = st.columns(3) #center the logo
 with cent_co:
-      st.image("banners/logo.png", width = 200) #adding the logo to the starting image
+      st.image("../banners/logo.png", width = 200) #adding the logo to the starting image
 
 
 st.info('SafeCheck AI: Automating Safety, Protecting Lives.') #adding info text to the app
@@ -51,7 +51,7 @@ logtxtbox = st.empty() #empty textbox used to print class
 print('loading model')
 if "model" not in st.session_state.keys():
     with st.spinner('Model is being loaded..'):
-        st.session_state["model"] = tf.keras.models.load_model('Notebooks/safety_gear_detect_V4.keras') #load the model from memory
+        st.session_state["model"] = tf.keras.models.load_model('../Notebooks/safety_gear_detect_V4.keras') #load the model from memory
 model = st.session_state["model"]
     
 print('model loaded')
@@ -84,7 +84,7 @@ def im_assesment(img):
     st.session_state.pred_image = f"{preds_label}_{timestamp_log}"
     
     if preds_class == 1:
-        cl_pred_im.image('banners/warning.png')
+        cl_pred_im.image('../banners/warning.png')
     else:
         cl_pred_im.empty()
 
