@@ -71,5 +71,10 @@ This image highlights how much the vest influences the classification. The edges
 ### Deployment
 At this stage, Safecheck AI is a proof of concept and has not yet been deployed. Future plans include deploying the model in a live warehouse environment and implementing a re-training schedule to continuously improve the model’s accuracy based on locally acquired data.
 
+![app](banners/app1.JPG)
+![app](banners/app_neg.JPG)
+
+
+
 ### Future Improvements
 One potential next step for Safecheck AI is to deploy the model in a warehouse, where it can continuously monitor safety compliance. Over time, the model can be re-trained with new data collected from the local environment to improve its accuracy and adapt to specific warehouse conditions. Re-training could occur on a schedule of 1, 3, and 6 months.
