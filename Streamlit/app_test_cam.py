@@ -18,7 +18,7 @@ import pyautogui
 import tensorflow as tf # Importing TensorFlow
 
 
-st.title('🎈 Safety Gear Identifier ') #title of app
+st.title('SafeCheck AI') #title of app
 st.logo("../banners/logo.png") #adding the logo to top corner
 
 print('starting')
