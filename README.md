@@ -76,7 +76,7 @@ At this stage, Safecheck AI is a proof of concept and has not yet been deployed.
 
 The previous images illustrate the Safecheck AI proof of concept, showcasing the application in both idle and active states, where it performs real-time safety gear detection. The interface displays relevant project details, including information about the data scientist overseeing the project, as well as the current status of the app. These details can be toggled on or off as needed. The app also provides a live feed from the webcam, continuously updating with real-time predictions regarding the presence of safety gear. Additionally, users can view previously captured images along with their corresponding predictions. Below, you can find a video demonstrating the functionality of the working application.
 
-
+[![Watch the video](banners/app_2.JPG)](https://youtu.be/vt5fpE0bzSY)
 
 ### Future Improvements
 One potential next step for Safecheck AI is to deploy the model in a warehouse, where it can continuously monitor safety compliance. Over time, the model can be re-trained with new data collected from the local environment to improve its accuracy and adapt to specific warehouse conditions. Re-training could occur on a schedule of 1, 3, and 6 months.
